@@ -104,11 +104,11 @@ func (t *tool) run(args ...string) (string, error) {
 
 	err := cmd.Run()
 	if err != nil {
-		return "", fmt.Errorf("run %s %s: %s (%s)",
-			cmd.Path, strings.Join(cmd.Args, " "), stderr.String(), err)
+		return "", fmt.Errorf("run %s %s: stdout(%s), stderr(%s), err(%s)",
+			cmd.Path, strings.Join(cmd.Args, " "), stdout.String(), stderr.String(), err)
 	}
 
-	return stdout.String(), err
+	return stdout.String(), nil
 }
 
 func requestToBytes(r *Request) []byte {
