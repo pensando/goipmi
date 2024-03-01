@@ -104,8 +104,12 @@ func (t *tool) run(args ...string) (string, error) {
 
 	err := cmd.Run()
 	if err != nil {
+		if len(cmd.Args) == 1 {
+			return "", fmt.Errorf("run %s: stdout(%s), stderr(%s), err(%s)",
+				cmd.Path, stdout.String(), stderr.String(), err)
+		}
 		return "", fmt.Errorf("run %s %s: stdout(%s), stderr(%s), err(%s)",
-			cmd.Path, strings.Join(cmd.Args, " "), stdout.String(), stderr.String(), err)
+			cmd.Path, strings.Join(cmd.Args[1:], " "), stdout.String(), stderr.String(), err)
 	}
 
 	return stdout.String(), nil
