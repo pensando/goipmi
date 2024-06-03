@@ -384,3 +384,7 @@ func (l *lan) closeSession() error {
 
 	return l.send(req, &CloseSessionResponse{})
 }
+
+func (l *lan) SetCiphersuite(int) {
+	// do nothing
+}

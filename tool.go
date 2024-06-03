@@ -28,10 +28,11 @@ import (
 
 type tool struct {
 	*Connection
+	ciphersuite int
 }
 
 func newToolTransport(c *Connection) transport {
-	return &tool{Connection: c}
+	return &tool{Connection: c, ciphersuite: -1}
 }
 
 func (t *tool) open() error {
@@ -63,6 +64,10 @@ func (t *tool) Console() error {
 	return cmd.Run()
 }
 
+func (t *tool) SetCiphersuite(c int) {
+	t.ciphersuite = c
+}
+
 func (t *tool) options() []string {
 	intf := t.Interface
 	if intf == "" {
@@ -78,6 +83,10 @@ func (t *tool) options() []string {
 
 	if t.Port != 0 {
 		options = append(options, "-p", strconv.Itoa(t.Port))
+	}
+
+	if t.ciphersuite != -1 {
+		options = append(options, "-C", strconv.Itoa(t.ciphersuite))
 	}
 
 	return options

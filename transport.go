@@ -22,6 +22,7 @@ type transport interface {
 	open() error
 	close() error
 	send(*Request, Response) error
+	SetCiphersuite(int)
 	// Console enters Serial Over LAN mode
 	Console() error
 }
